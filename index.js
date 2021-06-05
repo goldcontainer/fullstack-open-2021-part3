@@ -29,8 +29,56 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
+app.get('/info', (request, response) => {
+	const len = persons.length
+	const date = new Date().toString()
+	response.send(`<p>Phonebook has info for ${len} people <br />
+		${date}</p>`)
+})
+
 app.get('/api/persons', (request, response) => {
   response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+	const id = Number(request.params.id)
+	const person = persons.find(person => person.id === id)
+
+	if (person) {
+		response.json(person)
+	} else {
+		response.status(404).end()
+	}
+})
+
+const generateId = (min, max) => {
+	return Math.floor(Math.random() * (max - min) + min)
+}
+
+app.post('/api/persons', (request, response) => {
+	const body = request.body
+
+	if (!body.content) {
+		return response.status(400).json({
+			error: 'content missing'
+		})
+	}
+
+	const person = {
+		id: generateId(persons.length, 200),
+		name: body.content,
+	}
+
+	persons = persons.concat(person)
+
+	response.json(person)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+	const id = Number(request.params.id)
+	persons = persons.filter(person => person.id !== id)
+
+	response.status(204).end()
 })
 
 const PORT = 3001
