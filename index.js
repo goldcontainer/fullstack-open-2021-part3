@@ -62,16 +62,20 @@ app.post('/api/persons', (request, response) => {
 		return response.status(400).json({
 			error: 'content missing'
 		})
+	} else if (persons.includes(body.content)) {
+		return response.status(400).json({
+			error: 'name must be unique'
+		})
+	} else {
+		const person = {
+			id: generateId(persons.length, 200),
+			name: body.content,
+		}
+
+		persons = persons.concat(person)
+
+		response.json(person)
 	}
-
-	const person = {
-		id: generateId(persons.length, 200),
-		name: body.content,
-	}
-
-	persons = persons.concat(person)
-
-	response.json(person)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
