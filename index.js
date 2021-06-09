@@ -4,8 +4,8 @@ const morgan = require('morgan')
 
 const app = express()
 
-morgan.token('person', (req) => {
-  if (req.method === 'POST') return JSON.stringify(req.body)
+morgan.token('person', (request) => {
+  if (request.method === 'POST') return JSON.stringify(req.body)
   return null
 })
 
