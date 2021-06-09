@@ -1,6 +1,6 @@
 # fullstack-open-2021-part3
 
-Fullstaack Open Part 3 shifts focus on backend and implementing functionality on the server side. 
+Fullstack Open Part 3 shifts focus on backend and implementing functionality on the server side. 
 
 ###### Deployed server/app
 
